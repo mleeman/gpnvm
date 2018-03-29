@@ -7,6 +7,13 @@
 
 static const char *gpNvm_file_Test = "test.nvm";
 
+static void gpNvm_preliminary_Test(CuTest* tc)
+{
+	/* paranoid safety checks */
+	CuAssertTrue(tc, sizeof(UInt8) == 1);
+	CuAssertTrue(tc, sizeof(UInt16) == 2);
+}
+
 static void gpNvm_OpenCloseFile_Test(CuTest* tc)
 {
 	gpNvm_Result result;
@@ -165,6 +172,7 @@ static int RunAllTests(void)
 	CuString *output = CuStringNew();
 	CuSuite *suite = CuSuiteNew();
 
+	SUITE_ADD_TEST(suite, gpNvm_preliminary_Test);
 	SUITE_ADD_TEST(suite, gpNvm_OpenCloseFile_Test);
 	SUITE_ADD_TEST(suite, gpNvm_GetAttribute_Test);
 	SUITE_ADD_TEST(suite, gpNvm_SetAttribute_Test);

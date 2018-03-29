@@ -2,6 +2,7 @@
 #define __GPNVM_H_20180325__
 
 typedef unsigned char UInt8;
+typedef unsigned short UInt16;
 
 typedef UInt8 gpNvm_AttrId;
 typedef UInt8 gpNvm_Result;
