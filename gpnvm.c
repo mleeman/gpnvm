@@ -4,8 +4,24 @@
 #include <string.h>
 #include <errno.h>
 
+/** SECTION: gpnvm
+ * @title: Simple Non-Volatile Memory Storage
+ *
+ * See README.md for full description
+ */
+
+/* file pointer */
 static FILE *fp;
 
+/**
+ * gpNvm_OpenFile:
+ * @filename: file to open
+ *
+ * Open the file, if the file is not present, return a fp to an newly
+ * created file.
+ *
+ * Returns: custom error code
+ */
 gpNvm_Result gpNvm_OpenFile(const char *filename)
 {
 	if (fp || !filename)
@@ -18,6 +34,13 @@ gpNvm_Result gpNvm_OpenFile(const char *filename)
 	return fp == NULL;
 }
 
+/**
+ * gpNvm_CloseFile:
+ *
+ * Close the file global handle
+ *
+ * Returns: custom error code
+ */
 gpNvm_Result gpNvm_CloseFile(void)
 {
 	gpNvm_Result ret = fp ? fclose(fp) : 1;
@@ -25,11 +48,32 @@ gpNvm_Result gpNvm_CloseFile(void)
 	return ret;
 }
 
+/**
+ * gpNvm_Read:
+ * @ptr: location to read
+ * @len: length to read
+ *
+ * Simple wrapper around fread, read byte wise
+ *
+ * Returns: custom error code and mask the bytes read return code
+ * from fread. Success if number of bytes asked to read is number of
+ * bytes read.
+ */
 static int gpNvm_Read(void *ptr, int len)
 {
 	return fread(ptr, 1, len, fp) == len;
 }
 
+/**
+ * gpNvm_Write:
+ * @ptr: location to the byte array to write
+ * @len: number of elements to write
+ *
+ * Simple wrapper around fwrite, write byte wise
+ *
+ * Returns: custom error code ad mask bytes write. Success if number of
+ * bytes pass is number of bytes written.
+ */
 static int gpNvm_Write(void *ptr, int len)
 {
 	return fwrite(ptr, 1, len, fp) == len;
@@ -62,6 +106,15 @@ static int gpNvm_SeekFile(gpNvm_AttrId key, UInt8 *pLength)
 	return -1;
 }
 
+/**
+ * gpNvm_checksum:
+ * @pvalue: pointer to byte array to compute CRC on
+ * @length: number of bytes to CRC
+ *
+ * Return checksum
+ *
+ * Returns: 16bit CRC
+ */
 static UInt16 gpNvm_checksum(UInt8 *pValue, UInt8 length)
 {
 	int i, sum = 0;
