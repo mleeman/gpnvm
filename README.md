@@ -28,9 +28,9 @@ Make sure the implementation supports different datatypes for pValue
 
 Some examples:
 
-... Basic datatypes like UInt8 , UInt32 ,...
-... An array of UInt8
-... Structs like for instance:
+* Basic datatypes like UInt8 , UInt32 ,...
+* An array of UInt8
+* Structs like for instance:
 
 ```c
 #define MAX_LENGTH 20
@@ -43,10 +43,10 @@ UInt8 data[MAX_LENGTH];
 } gpTestData_t;
 ```
 
-... Extend the basic implementation so it discovers corruptions in the underlying storage.
-... Extend the basic implementation so it can recover from corruptions in the underlying
-storage.
-... Extend the your solution with an unit test.
+* Extend the basic implementation so it discovers corruptions in the underlying storage.
+* Extend the basic implementation so it can recover from corruptions in the underlying
+  storage.
+* Extend the your solution with an unit test.
 
 
 [![Build Status](https://travis-ci.org/cavokz/gpnvm.svg?branch=master)](https://travis-ci.org/cavokz/gpnvm)
