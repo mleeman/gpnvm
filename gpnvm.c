@@ -8,6 +8,25 @@
  * @title: Simple Non-Volatile Memory Storage
  *
  * See README.md for full description
+ *
+ * TODO: this file has a number of tests for the validity of data on a
+ * item level: every piece of information that is  stored has a CRC next to
+ * it. This is not really needed. If the data is written to flash, it will
+ * require a full flash sector wipe to write; so the entire block of data
+ * is written as once. To that end, a CRC on the entire block is enough.
+ *
+ * TODO: It is at the moment of writing data that the configuration
+ * can be corrupt and or lost. If data is corrupt, it should no longer
+ * be trusted. This is where the item CRC comes in: it is possible to
+ * reject only a smaller piece of information. However, when data is
+ * written to flash, the flash sector is first erased (all bytes are set
+ * to 0xFF). When power is lost at this moment, all configuration data
+ * is lost. To this end, it would be better to implement a ping/pong
+ * system where data is stored in 2 different sectors and only one is
+ * set active. Writing is always done to the passive sector and only when
+ * the write is successful, flash config is set to passive by toggling on
+ * the other buffer by doing a bit operation. If a write is not complete,
+ * or a CRC is corrupt, there is always a backup config.
  */
 
 /* file pointer */
